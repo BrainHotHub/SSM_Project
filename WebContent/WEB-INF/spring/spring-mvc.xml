@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+<!-- 	<mvc:annotation-driven /> -->
+	<!-- 启用spring mvc 注解 -->
+	<mvc:annotation-driven>
+		<!-- 启动JSON格式的配置 -->
+		<mvc:message-converters>
+			<!-- 这里也可以自己定制class -->
+			<beans:bean
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<beans:property name="supportedMediaTypes">
+					<beans:list>
+						<beans:value>text/html;charset=UTF-8</beans:value>  <!-- 避免IE出现下载JSON文件的情况 -->
+					</beans:list>
+				</beans:property>
+			</beans:bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- Handles HTTP GET requests for /static/** by efficiently serving up static resources in the ${webappRoot}/static/ directory -->
+	<!-- <resources mapping="/static/**" location="/static/" /> -->
+
+	<context:component-scan base-package="crm.com.controller" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+<!--  	<mvc:resources location="/resource/" mapping="/resource/**" /> -->
+ 
+ <!--配置拦截器, 多个拦截器,顺序执行 --> 
+	<mvc:interceptors>  
+		<mvc:interceptor>  
+			<!-- 
+				/**的意思是所有文件夹及里面的子文件夹
+				/*是所有文件夹，不含子文件夹
+				/是web项目的根目录 
+				exclude-mapping 不拦截的url
+			-->
+			<mvc:mapping path="/" />
+		<!-- 	<mvc:mapping path="/**" /> 加上这个就已经拦截了所有的 -->
+			<mvc:exclude-mapping path="/code"/> 
+			<mvc:exclude-mapping path="/logout"/>  
+			
+			<beans:bean class="crm.com.interceptor.CommonInterceptor"></beans:bean>  
+		</mvc:interceptor>
+		<!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->
+	</mvc:interceptors>
+</beans:beans>

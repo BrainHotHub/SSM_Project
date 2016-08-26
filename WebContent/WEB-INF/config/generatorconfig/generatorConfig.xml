@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="F:\workspace\ssm_project\WebContent\WEB-INF\lib\mysql-connector-java-5.1.38.jar" />
+	<context id="ssm_projectTables">
+		<plugin type="org.mybatis.generator.plugins.AddLimitOffsetPlugin" />
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/crm" userId="root"
+			password="123456" />
+		<javaModelGenerator targetPackage="crm.com.model"
+			targetProject="ssm_project/src" />
+		<sqlMapGenerator targetPackage="crm.com.dao"
+			targetProject="ssm_project/src" />
+		<javaClientGenerator targetPackage="crm.com.dao"
+			targetProject="ssm_project/src" type="XMLMAPPER" />
+
+		<table schema="crm" tableName="sysuser"
+            domainObjectName="SysUser">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+        <table schema="crm" tableName="sysdept"
+            domainObjectName="SysDept">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+        <table schema="crm" tableName="sysmenu"
+            domainObjectName="SysMenu">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+           <table schema="crm" tableName="sysrole"
+            domainObjectName="SysRole">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+		 <table schema="crm" tableName="contact"
+            domainObjectName="Contact">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+		 <table schema="crm" tableName="customer"
+            domainObjectName="Customer">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+		 <table schema="crm" tableName="visitlog"
+            domainObjectName="VisitLog">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+		
+	</context>
+</generatorConfiguration>
