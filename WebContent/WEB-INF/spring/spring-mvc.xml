@@ -61,6 +61,7 @@
 						<beans:value>/code</beans:value>
 						<beans:value>/logout</beans:value>
 						<beans:value>/uploadlist</beans:value>
+						<beans:value>/preUpload</beans:value>
 					</beans:list>
 				</beans:property>
 			</beans:bean>

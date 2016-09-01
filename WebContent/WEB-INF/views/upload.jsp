@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="uploadaaaa" method="post" enctype="multipart/form-data">
+	<form action="preUpload" method="post" enctype="multipart/form-data">
 		<input type="file" name="file" /> 
 		<input type="submit" value="Submit" />
 	</form>

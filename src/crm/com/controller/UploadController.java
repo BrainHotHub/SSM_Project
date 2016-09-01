@@ -16,9 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 	private final Logger log=LoggerFactory.getLogger(UploadController.class); 
 
-	@RequestMapping(value="/uploadaaaa",method=RequestMethod.POST)
+	@RequestMapping(value="/preUpload",method=RequestMethod.POST)
 	public String uplpad(@RequestParam("file") MultipartFile file,HttpServletRequest request,ModelMap model ){
-		System.out.println("开始");
+		System.out.println("开始上传图片....");
 		String path=request.getSession().getServletContext().getRealPath("upload");
 	    String fileName=file.getOriginalFilename();
 	    System.out.println(path);
