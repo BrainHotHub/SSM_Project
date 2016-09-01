@@ -1,5 +1,7 @@
 package crm.com.interceptor;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,18 +38,31 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
      *    从最后一个拦截器往回执行所有的postHandle() 
      *    接着再从最后一个拦截器往回执行所有的afterCompletion() 
      */  
+	private List<String> uncheckUrls; 
+	
+	
+	public List<String> getUncheckUrls() {
+		return uncheckUrls;
+	}
+	public void setUncheckUrls(List<String> uncheckUrls) {
+		this.uncheckUrls = uncheckUrls;
+	}
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		log.info("进入拦截器.......");
 		System.out.println("进入拦截器.......");
 		if ("GET".equalsIgnoreCase(request.getMethod())) {
     		RequestUtil.saveRequest();
         }
-    	
         //log.info("==============执行拦截: preHandle================");  
-		String requestUri = request.getRequestURI();
-		String contextPath = request.getContextPath();
-		String url = requestUri.substring(contextPath.length());
+		String requestUrl = request.getServletPath();
+        //免登入 免检查地址 
+		if(uncheckUrls.contains(requestUrl)){ 
+			System.out.println("进入免检查通道....");
+			return true; 
+		}
+		
 		
 		//这里对拉入黑名单的ip进行处理【扩展】
 		log.info("来自 >>>>>>"+RequestUtil.getIpAddr(request)+" 请求访问。");	
@@ -69,7 +84,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	  			  }
 	  			  // 如果cookieValue为空说明用户上次没有选择“记住下次登录”执行其他
 	  			  if(cookieValue==null){
-	  				  if (url.contains("login")){
+	  				  if (requestUrl.contains("login")){
 	  					  return true;
 	  				  }
 	  				  request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
@@ -108,7 +123,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	  				  }
   			      }
   		     }else{
-  		    	if (url.contains("login")){
+  		    	if (requestUrl.contains("login")){
 				    return true;
 			    }
   		    	request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
