@@ -3,9 +3,11 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<!-- <mvc:annotation-driven /> -->
@@ -40,10 +42,19 @@
 	</beans:bean>
 
 	<!-- <mvc:resources location="/resource/" mapping="/resource/**" /> -->
+	<!-- 上传文件 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
 	</beans:bean>
+
+  <cache:annotation-driven cache-manager="cacheManager"/> 
+  <beans:bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+        <beans:property name="configLocation" value="classpath:ehcache.xml"/>  
+    </beans:bean>  
+    <beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">  
+        <beans:property name="cacheManager" ref="cacheManagerFactory"/>  
+    </beans:bean> 
+    
 
 	<!--配置拦截器, 多个拦截器,顺序执行 -->
 	<mvc:interceptors>
