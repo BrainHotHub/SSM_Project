@@ -46,16 +46,7 @@
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</beans:bean>
-
-  <cache:annotation-driven cache-manager="cacheManager"/> 
-  <beans:bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
-        <beans:property name="configLocation" value="classpath:ehcache.xml"/>  
-    </beans:bean>  
-    <beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">  
-        <beans:property name="cacheManager" ref="cacheManagerFactory"/>  
-    </beans:bean> 
     
-
 	<!--配置拦截器, 多个拦截器,顺序执行 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
